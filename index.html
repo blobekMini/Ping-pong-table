@@ -3,17 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ping Pong Scoreboard</title>
     <link rel="manifest" href="/manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="/icon.png">
-    
+
     <style>
         body {
             color: white;
             background-color: rgb(31, 31, 31);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
 
         button {
@@ -21,6 +22,7 @@
             border-radius: 10px;
             color: white;
             background-color: black;
+            touch-action: manipulation;
         }
 
         .newGameButtonRed {
@@ -229,6 +231,18 @@
             scorebardBtnR.innerHTML = `<p>${redPoints}</p>`
             scorebardBtnB.innerHTML = `<p>${bluePoints}</p>`
         }
+
+
+        let lastTouch = 0;
+
+        document.addEventListener('touchend', function (e) {
+            const now = (new Date()).getTime();
+            if (now - lastTouch <= 300) {
+                e.preventDefault(); // blokuje podwójne tapnięcie
+            }
+            lastTouch = now;
+        }, false);
+
 
     </script>
 </body>
