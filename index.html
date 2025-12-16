@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            color: white;
+            background-color: rgb(31, 31, 31);
+        }
+
+        button {
+            border: solid black 5px;
+            border-radius: 10px;
+            color: white;
+            background-color: black;
+        }
+
+        .newGameButtonRed {
+            background-color: red;
+            width: 49vw;
+            height: 120px;
+        }
+
+        .newGameButtonBlue {
+            background-color: blue;
+            width: 49vw;
+            height: 120px;
+        }
+
+        #scorebardBtnR {
+            background-color: red;
+            border: none;
+            margin: 0;
+            width: 50vw;
+            height: 80vh;
+            border-radius: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 70vh;
+        }
+
+        #scorebardBtnB {
+            background-color: blue;
+            border: none;
+            margin: 0;
+            width: 50vw;
+            height: 80vh;
+            border-radius: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 70vh;
+        }
+
+        .center {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            flex-direction: column;
+            display: flex;
+            justify-content: center;
+            /* poziomo */
+            align-items: center;
+            /* pionowo */
+        }
+
+
+        .rstBtn {
+            width: 20vh;
+            height: 20vh;
+            border-radius: 0px;
+        }
+
+        #server {
+            display: flex;
+            justify-content: center;
+            /* poziomo */
+            align-items: center;
+            /* pionowo */
+            gap: 20px;
+            width: 100vw;
+            border: solid black 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="scoreboard" class="center">
+        <div style="  display: flex; gap: 0;">
+            <button id="scorebardBtnR" onclick="addScore(1)"></button>
+            <button id="scorebardBtnB" onclick="addScore(2)"></button>
+        </div>
+        <div id="server">
+            <button class="rstBtn" onclick="stopGame()">Restart</button>
+            <div style="justify-content: center; align-items: center; display: flex; width: 90vw;">
+                <h2 style="color: white;">Teraz Serwuje</h2>
+            </div>
+        </div>
+    </div>
+    <div id="new-game" class="center">
+        <h1 id="winner"></h1>
+        <h2>Kto zaczyna?</h2>
+        <div>
+            <button class="newGameButtonRed" onclick="newGame(1)"></button>
+            <button class="newGameButtonBlue" onclick="newGame(2)"></button>
+        </div>
+    </div>
+    <script>
+        const scorebardDiv = document.getElementById("scoreboard");
+        const newGameDiv = document.getElementById("new-game");
+        const scorebardBtnR = document.getElementById("scorebardBtnR");
+        const scorebardBtnB = document.getElementById("scorebardBtnB");
+
+
+        scorebardDiv.style.visibility = "hidden";
+        newGameDiv.style.visibility = "visible";
+
+        let startingColor = 0;
+        let bluePoints = 0;
+        let redPoints = 0;
+        let counter = 0;
+
+
+
+        function newGame(startingColorIn) {
+
+            
+            document.getElementById("winner").style.visibility = "hidden";
+            bluePoints = 0;
+            redPoints = 0;
+            startingColor = startingColorIn;
+                        updateScores()
+            if (startingColor == 1) {
+                document.getElementById("server").style.backgroundColor = "red";
+            } else {
+                document.getElementById("server").style.backgroundColor = "blue";
+            }
+            scorebardDiv.style.visibility = "visible";
+            newGameDiv.style.visibility = "hidden";
+
+        }
+
+        function stopGame() {
+            
+            document.getElementById("winner").style.visibility = "hidden";
+            scorebardDiv.style.visibility = "hidden";
+            newGameDiv.style.visibility = "visible";
+        }
+
+        function endGame(redScore, blueScore) {
+            scorebardDiv.style.visibility = "hidden";
+            newGameDiv.style.visibility = "visible";
+            const winnerEl = document.getElementById("winner");
+            winnerEl.style.visibility = "visible";
+
+            const winner =
+                redScore > blueScore ? "Czerwony" :
+                    blueScore > redScore ? "Niebieski" :
+                        "Remis";
+
+            winnerEl.innerHTML =
+                winner === "Remis"
+                    ? "Remis"
+                    : `${winner} wygrał mecz`;
+        }
+
+        function addScore(color) {
+            counter++;
+
+            if (color == 1) {
+                redPoints++;
+            } else {
+                bluePoints++;
+            }
+            updateScores()
+
+            if (redPoints == 11 || bluePoints == 11) {
+                endGame(redPoints, bluePoints);
+            }
+
+            if (bluePoints == 10 && redPoints == bluePoints) {
+                if (startingColor == 1) {
+                    startingColor = 2;
+                } else {
+                    startingColor = 1;
+                }
+                counter = 0;
+                updateColor()
+
+                return;
+            }
+
+            if (counter == 2) {
+                counter = 0
+                if (startingColor == 1) {
+                    startingColor = 2;
+                } else {
+                    startingColor = 1;
+                }
+                updateColor()
+
+            }
+
+
+
+        }
+
+
+        function updateColor() {
+            if (startingColor == 1) {
+                document.getElementById("server").style.backgroundColor = "red";
+            } else {
+                document.getElementById("server").style.backgroundColor = "blue";
+            }
+        }
+
+        function updateScores() {
+            scorebardBtnR.innerHTML = `<p>${redPoints}</p>`
+            scorebardBtnB.innerHTML = `<p>${bluePoints}</p>`
+        }
+
+    </script>
+</body>
+
+
+</html>
