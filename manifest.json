@@ -1,13 +1,13 @@
-{
+a za{
   "name": "PingPongApp",
   "short_name": "PingPong",
-  "start_url": "index.html",
+  "start_url": "/Ping-pong-table/index.html",
   "display": "standalone",
   "background_color": "#1f1f1f",
   "theme_color": "#1f1f1f",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "/Ping-pong-table/icon.png",
       "sizes": "512x512",
       "type": "image/png"
     }
