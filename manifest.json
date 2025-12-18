@@ -1,7 +1,7 @@
 {
   "name": "PingPongApp",
   "short_name": "PingPong",
-  "start_url": "https://blobekmini.github.io/Ping-pong-table/index.html",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#1f1f1f",
   "theme_color": "#1f1f1f",
